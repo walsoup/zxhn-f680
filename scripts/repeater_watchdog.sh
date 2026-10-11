@@ -29,6 +29,7 @@ check_and_heal() {
         log_msg "Warning: $CONFIG_FILE not found. Run ./scripts/setup_persistence.sh first."
         return 1
     fi
+    # shellcheck source=/dev/null
     . "$CONFIG_FILE"
 
     GATEWAY="${GATEWAY:-192.168.11.1}"
