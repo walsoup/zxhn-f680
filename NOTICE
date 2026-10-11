@@ -1,0 +1,23 @@
+ZTE ZXHN F680 Wireless Bridge & Repeater Toolkit
+Copyright (C) 2026 Walid Elonok
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This project includes, adapts, and builds upon research and tools from
+the reverse-engineering community:
+
+1. ZTE FactoryMode Challenge-Response Authentication (webFac):
+   - Tools and protocol implementation in tools/zte_factorymode.py
+   - Based on research and original implementation by douniwan5788:
+     https://github.com/douniwan5788/zte_modem_tools
+   - Licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+
+2. ZTE Configuration AES Cryptography:
+   - Configuration container structure and key derivation documented in
+     docs/CONFIG_ENCRYPTION_AND_SECRETS.md
+   - Based on research by mkst (zte-config-utility):
+     https://github.com/mkst/zte-config-utility
+   - Licensed under the GNU General Public License v3.0 (GPL-3.0).

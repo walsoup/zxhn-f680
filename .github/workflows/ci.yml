@@ -22,9 +22,19 @@ jobs:
           pip install -r requirements.txt
           python -m py_compile tools/*.py
 
-      - name: Verify Shell Scripts
+      - name: Install Shell Tools
+        run: sudo apt-get update && sudo apt-get install -y busybox shellcheck
+
+      - name: Verify Host Script (Bash)
         run: |
           bash -n connect.sh
+          shellcheck -s bash connect.sh
+
+      - name: Verify Router Scripts with BusyBox Ash & ShellCheck
+        run: |
           for script in scripts/*.sh; do
-            bash -n "$script"
+            echo "Validating $script with BusyBox ash..."
+            busybox ash -n "$script"
+            echo "Linting $script with shellcheck (POSIX sh)..."
+            shellcheck -s sh "$script"
           done

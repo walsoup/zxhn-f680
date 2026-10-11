@@ -48,15 +48,19 @@ apply_5g() {
 }
 
 case "$BAND" in
-    2|2.4|2g|2G)
+    2|2.4|2g|2G|2ghz|2GHz)
         apply_2g
         ;;
-    5|5.0|5g|5G)
+    5|5.0|5g|5G|5ghz|5GHz)
         apply_5g
         ;;
-    both|all|*)
+    both|all)
         apply_2g
         apply_5g
+        ;;
+    *)
+        echo "[-] Error: Invalid band '$BAND'. Expected '2.4', '5', or 'both'." >&2
+        exit 1
         ;;
 esac
 

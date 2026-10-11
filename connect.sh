@@ -15,8 +15,6 @@ elif [ -x "$DIR/venv/bin/python3" ]; then
     PYTHON_BIN="$DIR/venv/bin/python3"
 elif [ -n "${VIRTUAL_ENV:-}" ] && [ -x "$VIRTUAL_ENV/bin/python3" ]; then
     PYTHON_BIN="$VIRTUAL_ENV/bin/python3"
-elif [ -x "$DIR/../zte-config-utility/venv/bin/python3" ]; then
-    PYTHON_BIN="$DIR/../zte-config-utility/venv/bin/python3"
 elif command -v python3 >/dev/null 2>&1; then
     PYTHON_BIN="python3"
 else

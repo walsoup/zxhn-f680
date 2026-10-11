@@ -26,7 +26,8 @@ The F680 features two separate Wi-Fi chipsets on distinct PCI buses:
 zxhn-f680/
 ├── connect.sh                   # One-click host script: unlocks backdoor & opens root shell
 ├── requirements.txt             # Host Python dependencies (requests, pexpect, pycryptodome)
-├── LICENSE                      # MIT License
+├── LICENSE                      # GNU Affero General Public License v3.0 (AGPL-3.0)
+├── NOTICE                       # Third-party research & tool attributions
 ├── README.md                    # Main documentation & getting started guide
 ├── docs/                        # Deep reverse-engineering architecture guides
 │   ├── HARDWARE_ARCHITECTURE.md # Flash MTD map, dual PCI radios, serial UART pinout
@@ -46,6 +47,7 @@ zxhn-f680/
 │   └── unhide_web_scanner.sh    # RAM overlay (mount -o bind) to expose ThinkLua 5GHz scan GUI
 └── tools/
     ├── auto_telnet.py           # Automated exploit & interactive pexpect telnet launcher
+    ├── deploy.sh                # Transient HTTP server to transfer scripts to ONT
     └── zte_factorymode.py       # Standalone implementation of ZTE FactoryMode handshake
 ```
 
@@ -100,9 +102,38 @@ Use `./connect.sh` to trigger the `webFac` HTTP challenge-response backdoor, ret
 
 ---
 
-### 4. Scan & Connect to Upstream Wi-Fi (On Router)
+### 4. Transfer Scripts to the Router
 
-Once inside the ONT root shell (`/ # `):
+Once logged into the root shell (`/ # `), you need the scripts in the ONT's RAM (`/tmp`).
+
+#### Option A: One-Click Host Deploy Server (Recommended)
+On your host PC terminal, run:
+```bash
+./tools/deploy.sh 192.168.11.200
+```
+This detects your host IP and launches a local HTTP server. It will print the exact one-liner to paste into your ONT root shell:
+```sh
+mkdir -p /tmp/scripts && cd /tmp/scripts && \
+for s in bridge.sh scan.sh status.sh repeater_watchdog.sh setup_local_wifi.sh disable_tr069.sh setup_persistence.sh setmac_helper.sh unhide_web_scanner.sh; do \
+  wget "http://<YOUR_HOST_IP>:8000/$s" -O "/tmp/scripts/$s" && chmod +x "/tmp/scripts/$s"; \
+done
+```
+
+#### Option B: Manual Download via `wget` / `curl`
+From your host, serve the `scripts` directory:
+```bash
+python3 -m http.server 8000 --directory scripts
+```
+Then on the ONT (`/ #`):
+```sh
+cd /tmp && wget http://<HOST_IP>:8000/bridge.sh && chmod +x bridge.sh
+```
+
+---
+
+### 5. Scan & Connect to Upstream Wi-Fi (On Router)
+
+From `/tmp/scripts` on the ONT root shell:
 
 #### A. Run Site Survey
 ```sh
@@ -228,6 +259,7 @@ This repository contains clean, reusable tools and reverse-engineering documenta
 
 ---
 
-## License
+## License & Attributions
 
-MIT. See [LICENSE](LICENSE) for details.
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+See [LICENSE](LICENSE) for the full license text and [NOTICE](NOTICE) for third-party protocol research attributions.

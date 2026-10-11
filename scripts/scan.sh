@@ -9,13 +9,17 @@
 BAND="${1:-5}"
 
 case "$BAND" in
-    2|2.4|2g|2G|0)
+    2|2.4|2g|2G|2ghz|2GHz|0)
         CARD=0
         LABEL="2.4 GHz (MT7603E)"
         ;;
-    5|5.0|5g|5G|1|*)
+    5|5.0|5g|5G|5ghz|5GHz|1)
         CARD=1
         LABEL="5 GHz (MT7615E - ApCli Supported)"
+        ;;
+    *)
+        echo "[-] Error: Invalid band '$BAND'. Specify '2.4' or '5'." >&2
+        exit 1
         ;;
 esac
 

@@ -4,7 +4,9 @@
 ZTE FactoryMode Telnet Backdoor Unlocker
 Enables Mode 2 (Developer/Root) Telnet on ZTE ZXHN ONTs via the webFac HTTP challenge-response protocol.
 
-Originally ported from https://github.com/douniwan5788/zte_modem_tools
+License: GNU Affero General Public License v3.0 (AGPL-3.0)
+Adapted from protocol research by douniwan5788 (https://github.com/douniwan5788/zte_modem_tools)
+See NOTICE and LICENSE for details.
 """
 
 import argparse
